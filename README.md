@@ -3,7 +3,7 @@
 A twitter-like social media web app, made entirely in Typescript.
 This repo contains the front-end for the project, made with React and TailwindCSS.
 
-MBlog is actually a "remake" of a old project of mine, MacielBlog. However, this one includes much more complex code, with persistent login and JWT token managing.
+MBlog is actually a "remake" of an old project of mine, MacielBlog. However, this one includes much more complex code, with persistent login and JWT token managing.
 
 # Setup
 

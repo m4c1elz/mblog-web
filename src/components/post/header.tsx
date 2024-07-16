@@ -1,6 +1,4 @@
 import { PropsWithChildren } from "react"
-import { PostProps } from "."
-import { dayjs } from "../../lib/dayjs"
 
 type HeaderProps = PropsWithChildren
 

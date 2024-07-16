@@ -43,6 +43,12 @@ const VerifyAccount = lazy(() =>
     })),
 )
 
+const EditUser = lazy(() =>
+    import("./pages/edit-user").then(module => ({
+        default: module.EditUser,
+    })),
+)
+
 const router = createBrowserRouter([
     {
         path: "/login",
@@ -94,6 +100,16 @@ const router = createBrowserRouter([
             <ProtectedRoute>
                 <Suspense fallback={<Loading />}>
                     <User />
+                </Suspense>
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/users/edit",
+        element: (
+            <ProtectedRoute>
+                <Suspense fallback={<Loading />}>
+                    <EditUser />
                 </Suspense>
             </ProtectedRoute>
         ),

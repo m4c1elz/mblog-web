@@ -14,6 +14,7 @@ import { refreshResponseInterceptor } from "../lib/axios"
 const AuthContext = createContext<AuthProviderValueType | null>(null)
 
 export type ReturnedUserType = {
+    id: number
     name: string
     atsign: string
     email: string
@@ -51,9 +52,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
                     const { userId } = jwtDecode(token) as UserPayload
                     const {
-                        data: { name, atsign, email, description },
+                        data: { id, name, atsign, email, description },
                     } = await api.get(`/users/${userId}`)
-                    setUser({ name, atsign, email, description })
+                    setUser({ id, name, atsign, email, description })
 
                     setIsAuthenticated(true)
                     api.interceptors.response.use(

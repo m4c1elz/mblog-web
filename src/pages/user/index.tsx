@@ -8,6 +8,7 @@ import { Button } from "../../components/button"
 import { CalendarPlus, ClipboardCopy, Contact } from "lucide-react"
 import { dayjs } from "../../lib/dayjs"
 import { Post } from "../../components/post"
+import { LinkButton } from "../../components/link-button"
 
 export interface UserType {
     id: number
@@ -55,10 +56,10 @@ export function User() {
             <UserLayout>
                 <main className="flex h-screen flex-1 flex-col items-center overflow-auto px-6 py-11 md:items-start xl:flex-row">
                     <div className="m-auto space-y-4 xl:m-0">
-                        <section className="w-96 space-y-6 border border-black/20 bg-primary px-6 py-4">
+                        <section className="min-w-96 space-y-6 border border-black/20 bg-primary px-6 py-4">
                             <h1 className="text-2xl font-bold">Usuário</h1>
-                            <div className="flex w-full gap-12">
-                                <div className="aspect-square h-32 rounded-full bg-slate-400"></div>
+                            <div className="flex w-full flex-col items-center gap-12 text-center sm:flex-row sm:text-start">
+                                <div className="aspect-square w-32 rounded-full bg-slate-400 sm:h-32 sm:w-auto"></div>
                                 <div className="flex grow flex-col justify-between">
                                     <div>
                                         <h1 className="text-lg">{user.name}</h1>
@@ -67,9 +68,16 @@ export function User() {
                                         </p>
                                     </div>
                                     {currentUser.atsign === user.atsign ? (
-                                        <Button className="w-20">Editar</Button>
+                                        <LinkButton
+                                            to="/users/edit"
+                                            className="m-auto mt-2 w-20 sm:mx-0"
+                                        >
+                                            Editar
+                                        </LinkButton>
                                     ) : (
-                                        <Button className="w-20">Seguir</Button>
+                                        <Button className="mx-auto mt-2 w-20 sm:mx-0">
+                                            Seguir
+                                        </Button>
                                     )}
                                 </div>
                             </div>
@@ -82,7 +90,7 @@ export function User() {
                                 </div>
                             )}
                         </section>
-                        <div className="w-96 space-y-6 border border-black/20 bg-primary px-6 py-4">
+                        <div className="min-w-96 space-y-6 border border-black/20 bg-primary px-6 py-4">
                             <div className="space-y-2">
                                 <h1 className="text-xl font-medium">
                                     Total de seguidores
@@ -123,6 +131,11 @@ export function User() {
                             Postagens
                         </h1>
                         <div className="h-auto pb-16">
+                            {user.posts.length === 0 && (
+                                <h1 className="text-center font-medium">
+                                    Não há postagens para ver.
+                                </h1>
+                            )}
                             {user.posts.map(post => (
                                 <Post.Root id={post.id} key={post.id}>
                                     <Post.Header>

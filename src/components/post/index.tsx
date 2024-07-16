@@ -1,5 +1,3 @@
-import { PropsWithChildren } from "react"
-import { Post as PostType } from "../../types/post"
 import { Root } from "./root"
 import { Header } from "./header"
 import { Content } from "./content"
@@ -8,8 +6,6 @@ import { User } from "./user"
 import { Likes } from "./likes"
 import { Comments } from "./comments"
 import { Date } from "./date"
-
-export type PostProps = PropsWithChildren<PostType>
 
 export const Post = {
     Root,

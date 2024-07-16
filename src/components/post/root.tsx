@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom"
-import { PostProps } from "."
+import { PropsWithChildren } from "react"
 
-export function Root({ id, children }: Pick<PostProps, "id" | "children">) {
+type RootProps = PropsWithChildren & {
+    id: string | number
+}
+
+export function Root({ id, children }: RootProps) {
     return (
         <Link
             to={`/posts/${id}`}

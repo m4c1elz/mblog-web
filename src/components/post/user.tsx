@@ -1,10 +1,11 @@
-import { PostProps } from "."
+import { PropsWithChildren } from "react"
 import { Link } from "react-router-dom"
 
-export function User({
-    children,
-    atsign,
-}: Pick<PostProps, "children" | "atsign">) {
+type UserProps = PropsWithChildren & {
+    atsign: string
+}
+
+export function User({ children, atsign }: UserProps) {
     return (
         <Link
             to={`/users/${atsign}`}

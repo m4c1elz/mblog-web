@@ -1,5 +1,7 @@
-import { PostProps } from "."
+import { PropsWithChildren } from "react"
 
-export function Content({ children }: Pick<PostProps, "children">) {
+type ContentProps = PropsWithChildren
+
+export function Content({ children }: ContentProps) {
     return <p className="font-medium">{children}</p>
 }

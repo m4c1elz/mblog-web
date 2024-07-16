@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode } from "react"
+import { ReactNode } from "react"
 import { twMerge } from "tailwind-merge"
 import { Link, LinkProps } from "react-router-dom"
 

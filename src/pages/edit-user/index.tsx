@@ -1,12 +1,11 @@
-import { useMutation } from "@tanstack/react-query"
 import { Button } from "../../components/button"
 import { Input } from "../../components/input"
-import { Sidebar } from "../../components/sidebar"
 import { Textarea } from "../../components/textarea"
-import { api } from "../../lib/axios"
 import { ReturnedUserType, useAuth } from "../../providers/auth-provider"
 import { useForm } from "react-hook-form"
 import { LoaderCircle } from "lucide-react"
+import { EditUserLayout } from "./layout"
+import { useEditUser } from "../../hooks/use-edit-user"
 
 type UserEditFormType = {
     name: string
@@ -23,18 +22,12 @@ export function EditUser() {
         mutateAsync: editUserFn,
         isPending,
         isSuccess,
-    } = useMutation({
-        mutationKey: ["edit-user", user.id],
-        mutationFn: async (data: UserEditFormType) => {
-            await api.put(`/users/${user.id}`, data)
-        },
-    })
+    } = useEditUser({ userId: user.id })
 
     const onSubmit = async (data: UserEditFormType) => await editUserFn(data)
 
     return (
-        <div className="flex">
-            <Sidebar />
+        <EditUserLayout>
             <div className="flex flex-1 items-center justify-center">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -92,6 +85,6 @@ export function EditUser() {
                     </Button>
                 </form>
             </div>
-        </div>
+        </EditUserLayout>
     )
 }

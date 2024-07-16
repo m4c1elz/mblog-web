@@ -31,10 +31,42 @@ const User = lazy(() =>
     })),
 )
 
+const Register = lazy(() =>
+    import("./pages/register").then(module => ({
+        default: module.Register,
+    })),
+)
+
+const VerifyAccount = lazy(() =>
+    import("./pages/verify-account").then(module => ({
+        default: module.VerifyAccount,
+    })),
+)
+
 const router = createBrowserRouter([
     {
         path: "/login",
-        element: <Login />,
+        element: (
+            <Suspense fallback={<Loading />}>
+                <Login />
+            </Suspense>
+        ),
+    },
+    {
+        path: "/register",
+        element: (
+            <Suspense fallback={<Loading />}>
+                <Register />
+            </Suspense>
+        ),
+    },
+    {
+        path: "/verify/:token",
+        element: (
+            <Suspense fallback={<Loading />}>
+                <VerifyAccount />
+            </Suspense>
+        ),
     },
     {
         path: "/",

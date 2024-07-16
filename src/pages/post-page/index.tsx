@@ -32,7 +32,6 @@ export function PostPage() {
         queryKey: ["get-post", id],
         queryFn: async () => {
             const response = await api.get(`/posts/${id}?comments=true`)
-            console.log(response.data)
             return response.data as SinglePostType
         },
     })

@@ -29,6 +29,10 @@ export type AuthProviderValueType = {
     user: ReturnedUserType | null
     login: (data: { email: string; password: string }) => Promise<void>
     logout: () => Promise<void>
+    register: (data: {
+        email: string
+        password: string
+    }) => Promise<{ status: number; msg: string }>
     isAuthenticated: boolean
 }
 
@@ -75,6 +79,22 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setIsAuthenticated(true)
     }
 
+    async function register(data: { email: string; password: string }) {
+        try {
+            const response = await api.post("/auth/register", data)
+            if (response.status === 409) throw new Error("conflito de usuário")
+            return {
+                status: response.status,
+                msg: `Um e-mail de verificação foi enviado para ${data.email}. Por favor, verifique seu e-mail.`,
+            }
+        } catch (error) {
+            return {
+                status: 409,
+                msg: "Este usuário já existe!",
+            }
+        }
+    }
+
     async function logout() {
         await api.get("/auth/logout")
         api.interceptors.response.clear()
@@ -82,7 +102,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setUser(null)
     }
 
-    const value = { user, login, logout, isAuthenticated }
+    const value = { user, login, register, logout, isAuthenticated }
 
     if (loading) return <Loading />
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

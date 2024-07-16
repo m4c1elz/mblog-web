@@ -1,47 +1,47 @@
-import { useForm } from "react-hook-form"
-import { Input } from "../../components/input"
-import { useAuth } from "../../providers/auth-provider"
-import { Link, useNavigate } from "react-router-dom"
-import { Logo } from "../../components/logo"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "../../components/button"
-import { LoginLayout } from "./layout"
+import { Input } from "../../components/input"
+import { Logo } from "../../components/logo"
+import { RegisterLayout } from "./layout"
+import { useForm } from "react-hook-form"
+import { Link } from "react-router-dom"
+import { useAuth } from "../../providers/auth-provider"
 
-type LoginType = {
+type RegisterFormType = {
     email: string
     password: string
 }
 
-export function Login() {
-    const { handleSubmit, register } = useForm<LoginType>()
-    const navigate = useNavigate()
-    const { login, isAuthenticated } = useAuth()
+export function Register() {
+    const { register: registerUserFn } = useAuth()
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [success, setSuccess] = useState<string | null>(null)
+    const { register, handleSubmit } = useForm<RegisterFormType>()
 
-    useEffect(() => {
-        if (isAuthenticated) navigate("/")
-    }, [])
-
-    async function onSubmit(data: LoginType) {
+    async function onSubmit(data: RegisterFormType) {
         try {
-            setError(false)
             setLoading(true)
-            await login(data)
-            navigate("/")
-        } catch (error) {
-            console.error(error)
-            setError(true)
+
+            setSuccess(null)
+            setError(null)
+            const result = await registerUserFn(data)
+            if (result.status !== 200) {
+                console.log("chegou no erro")
+                setError(result.msg)
+            } else {
+                setSuccess(result.msg)
+            }
         } finally {
             setLoading(false)
         }
     }
 
     return (
-        <LoginLayout>
-            <div className="w-1/2">
+        <RegisterLayout>
+            <div>
                 <img
-                    src="/login-image.png"
+                    src="/register-image.png"
                     className="mb-6 h-64 object-contain md:mb-0 md:h-auto"
                 />
             </div>
@@ -52,10 +52,8 @@ export function Login() {
                     className="m-auto min-h-64 w-11/12 rounded-xl border border-black/20 bg-primary py-4 md:w-96"
                 >
                     <div className="text-center">
-                        <h1 className="text-2xl font-bold">Entrar</h1>
-                        <p className="text-black/40">
-                            Cadastre-se com seu usuário.
-                        </p>
+                        <h1 className="text-2xl font-bold">Registrar</h1>
+                        <p className="text-black/40">Crie uma conta nova.</p>
                     </div>
                     <div className="space-y-8 px-4">
                         <section className="space-y-2">
@@ -75,25 +73,27 @@ export function Login() {
                             />
                         </section>
                         <Button type="submit" className="w-full">
-                            {loading ? "Enviando..." : "Enviar"}
+                            {loading ? "Enviando..." : "Cadastrar"}
                         </Button>
                         {error && (
                             <h1 className="text-center font-medium text-red-400">
-                                Houve um erro ao realizar login.
+                                {error}
+                            </h1>
+                        )}
+                        {success && (
+                            <h1 className="text-center font-medium text-emerald-400">
+                                {success}
                             </h1>
                         )}
                     </div>
-                    <p className="mt-4 flex flex-col text-center">
-                        Ainda não possui uma conta?{" "}
-                        <Link
-                            to="/register"
-                            className="font-medium text-accent"
-                        >
-                            Cadastre-se agora
+                    <p className="mt-4 text-center">
+                        Já possui uma conta?{" "}
+                        <Link to="/login" className="font-medium text-accent">
+                            Faça login
                         </Link>
                     </p>
                 </form>
             </section>
-        </LoginLayout>
+        </RegisterLayout>
     )
 }

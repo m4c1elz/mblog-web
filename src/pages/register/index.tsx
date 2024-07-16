@@ -39,13 +39,13 @@ export function Register() {
 
     return (
         <RegisterLayout>
-            <div>
+            <div className="p-6 md:w-1/2">
                 <img
                     src="/register-image.png"
-                    className="mb-6 h-64 object-contain md:mb-0 md:h-auto"
+                    className="mb-6 ml-auto h-64 object-contain md:mb-0 md:h-auto"
                 />
             </div>
-            <section className="space-y-6">
+            <section className="mb-6 space-y-6 md:mb-0">
                 <Logo />
                 <form
                     onSubmit={handleSubmit(onSubmit)}

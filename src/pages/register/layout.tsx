@@ -4,7 +4,7 @@ type RegisterLayoutProps = PropsWithChildren
 
 export function RegisterLayout({ children }: RegisterLayoutProps) {
     return (
-        <div className="flex h-screen w-screen flex-col items-center gap-2 bg-background md:flex-row-reverse md:justify-around md:gap-0">
+        <div className="flex h-screen w-screen flex-col items-center gap-2 overflow-auto bg-background md:flex-row-reverse md:justify-around md:gap-0">
             {children}
         </div>
     )

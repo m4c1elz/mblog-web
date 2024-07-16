@@ -25,6 +25,12 @@ const Post = lazy(() =>
     })),
 )
 
+const User = lazy(() =>
+    import("./pages/user").then(module => ({
+        default: module.User,
+    })),
+)
+
 const router = createBrowserRouter([
     {
         path: "/login",
@@ -46,6 +52,16 @@ const router = createBrowserRouter([
             <ProtectedRoute>
                 <Suspense fallback={<Loading />}>
                     <Post />
+                </Suspense>
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/users/:atsign",
+        element: (
+            <ProtectedRoute>
+                <Suspense fallback={<Loading />}>
+                    <User />
                 </Suspense>
             </ProtectedRoute>
         ),

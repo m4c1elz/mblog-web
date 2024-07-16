@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { PostPageLayout } from "./layout"
 import { useQuery } from "@tanstack/react-query"
 import { api } from "../../lib/axios"
@@ -79,10 +79,13 @@ export function PostPage() {
                             className="m-auto mt-6 w-96 space-y-2 border border-black/20 bg-primary px-4 py-2 md:w-[500px] lg:w-[700px]"
                         >
                             <section className="flex w-full items-center justify-between">
-                                <div className="flex items-center gap-1">
+                                <Link
+                                    to={`/users/${comment.user}`}
+                                    className="flex items-center gap-1"
+                                >
                                     <div className="aspect-square h-8 rounded-full bg-slate-400"></div>
                                     <p className="font-base">@{comment.user}</p>
-                                </div>
+                                </Link>
                                 <p className="text-sm text-black/40">
                                     {dayjs(
                                         comment.createdAt

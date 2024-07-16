@@ -42,13 +42,16 @@ export function SidebarContent() {
                 </Dialog.Root>
             </section>
             <div>
-                <section className="mb-2 flex w-full cursor-pointer items-center gap-3 rounded-md px-1 py-4 transition-colors hover:bg-black/10">
+                <Link
+                    to={`/users/${user.atsign}`}
+                    className="mb-2 flex w-full cursor-pointer items-center gap-3 rounded-md px-1 py-4 transition-colors hover:bg-black/10"
+                >
                     <div className="aspect-square h-12 rounded-full bg-slate-500 object-contain"></div>
                     <div>
                         <h3 className="font-medium">{user.name}</h3>
                         <p className="text-black/30">@{user.atsign}</p>
                     </div>
-                </section>
+                </Link>
                 <Dialog.Root>
                     <Dialog.Trigger>
                         <Button className="w-full bg-red-500 hover:bg-red-600">

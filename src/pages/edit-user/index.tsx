@@ -16,22 +16,32 @@ type UserEditFormType = {
 
 export function EditUser() {
     const { user } = useAuth() as { user: NonNullable<ReturnedUserType> }
-    const { register, handleSubmit } = useForm<UserEditFormType>()
+    const { register, handleSubmit } = useForm<UserEditFormType>({
+        defaultValues: {
+            name: user.name,
+            atsign: user.atsign,
+            description: user.description,
+        },
+    })
 
     const {
         mutateAsync: editUserFn,
         isPending,
         isSuccess,
+        isError,
+        error,
     } = useEditUser({ userId: user.id })
 
     const onSubmit = async (data: UserEditFormType) => await editUserFn(data)
+
+    isError && console.log(error)
 
     return (
         <EditUserLayout>
             <div className="flex flex-1 items-center justify-center">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="w-[60%] space-y-6 border border-black/40 bg-primary px-6 py-4"
+                    className="mt-12 w-[80%] space-y-6 border border-black/40 bg-primary px-6 py-4 md:mt-0 lg:w-[60%]"
                 >
                     <h1 className="text-2xl font-bold">Editar usuário</h1>
                     <div className="space-y-2">
@@ -59,7 +69,9 @@ export function EditUser() {
                         <Input
                             type="password"
                             placeholder="********"
-                            {...register("password")}
+                            {...register("password", {
+                                setValueAs: pass => (pass === "" ? null : pass),
+                            })}
                         />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -74,6 +86,11 @@ export function EditUser() {
                     {isSuccess && (
                         <p className="text-center font-medium text-emerald-500">
                             Usuário editado com sucesso.
+                        </p>
+                    )}
+                    {isError && (
+                        <p className="text-center font-medium text-red-500">
+                            Houve um erro ao editar o usuário.
                         </p>
                     )}
                     <Button type="submit" className="w-full">

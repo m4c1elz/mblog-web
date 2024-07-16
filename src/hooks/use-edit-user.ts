@@ -15,6 +15,7 @@ export function useEditUser({ userId }: { userId: number }) {
     const mutation = useMutation({
         mutationKey: ["edit-user", userId],
         mutationFn: async (data: UserEditFormType) => {
+            console.log(data)
             await api.put(`/users/${userId}`, data)
         },
         onSuccess: () => {

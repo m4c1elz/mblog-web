@@ -9,7 +9,7 @@ export function MobileSidebar() {
         <>
             <button
                 onClick={() => setOpen(!open)}
-                className="absolute left-2 top-2 rounded bg-white p-1 md:hidden"
+                className="absolute left-2 top-2 rounded border border-black/20 bg-white p-1 transition-colors active:bg-black/20 md:hidden"
             >
                 <List className="text-accent" />
             </button>

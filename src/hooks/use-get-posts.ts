@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
 import { Post as PostType } from "../types/post"
-import { api } from "../lib/axios"
+import { getPosts } from "../services/get-posts"
 
 export function useGetPosts({ page }: { page: number }) {
     const query = useQuery({
         queryKey: ["get-posts", page],
         queryFn: async () => {
-            const response = await api.get(`/posts?page=${page}`)
+            const response = await getPosts({ page })
             return response.data as PostType[]
         },
     })

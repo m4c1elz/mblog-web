@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
-import { api } from "../lib/axios"
 import { useQueryClient } from "@tanstack/react-query"
+import { editUser } from "../services/edit-user"
 
 type UserEditFormType = {
     name: string
@@ -15,8 +15,7 @@ export function useEditUser({ userId }: { userId: number }) {
     const mutation = useMutation({
         mutationKey: ["edit-user", userId],
         mutationFn: async (data: UserEditFormType) => {
-            console.log(data)
-            await api.put(`/users/${userId}`, data)
+            await editUser({ userId, data })
         },
         onSuccess: () => {
             queryClient.invalidateQueries({

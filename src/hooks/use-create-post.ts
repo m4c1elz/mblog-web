@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useDialog } from "../providers/dialog-provider"
-import { api } from "../lib/axios"
 import { useNavigate } from "react-router-dom"
+import { createPost } from "../services/create-post"
 
 type PostData = {
     post: string
@@ -15,9 +15,7 @@ export function useCreatePost() {
 
     const mutation = useMutation({
         mutationKey: ["create-post"],
-        mutationFn: async (data: PostData) => {
-            await api.post("/posts", data)
-        },
+        mutationFn: async (data: PostData) => await createPost(data),
         onSuccess: async () => {
             closeDialog()
             queryClient.invalidateQueries({ queryKey: ["get-posts"] })

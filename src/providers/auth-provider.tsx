@@ -10,6 +10,9 @@ import { jwtDecode } from "jwt-decode"
 import { UserPayload } from "../types/user-payload"
 import { Loading } from "../components/loading"
 import { refreshResponseInterceptor } from "../lib/axios"
+import { logUserIn } from "../services/log-user-in"
+import { registerUser } from "../services/register-user"
+import { logUserOut } from "../services/log-user-out"
 
 const AuthContext = createContext<AuthProviderValueType | null>(null)
 
@@ -44,32 +47,36 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     useEffect(() => {
         ;(async () => {
-            if (!isAuthenticated) {
-                try {
-                    const response = await api.get("/auth/refresh")
-                    const { token } = response.data as { token: string }
-                    api.defaults.headers["Authorization"] = `Bearer ${token}`
+            try {
+                const response = await api.get("/auth/refresh")
+                const { token } = response.data as { token: string }
+                api.defaults.headers["Authorization"] = `Bearer ${token}`
 
-                    const { userId } = jwtDecode(token) as UserPayload
-                    const {
-                        data: { id, name, atsign, email, description },
-                    } = await api.get(`/users/${userId}`)
-                    setUser({ id, name, atsign, email, description })
+                const { userId } = jwtDecode(token) as UserPayload
+                const {
+                    data: { id, name, atsign, email, description },
+                } = await api.get(`/users/${userId}`)
+                setUser({ id, name, atsign, email, description })
 
-                    setIsAuthenticated(true)
-                    api.interceptors.response.use(
-                        response => response,
-                        refreshResponseInterceptor,
-                    )
-                } finally {
-                    setLoading(false)
-                }
+                setIsAuthenticated(true)
+                api.interceptors.response.use(
+                    response => response,
+                    refreshResponseInterceptor,
+                )
+            } catch {
+                /*
+                 * this means we don't have the refresh token cookie.
+                 * no need to console.log() the error, we are just redirected to the login
+                 * page by the ProtectedRoute component.
+                 */
+            } finally {
+                setLoading(false)
             }
         })()
     }, [])
 
     async function login(data: { email: string; password: string }) {
-        const response = await api.post("/auth/login", data)
+        const response = await logUserIn(data)
         const { token, user } = response.data as LoginResponse
         api.defaults.headers["Authorization"] = `Bearer ${token}`
         api.interceptors.response.use(
@@ -82,7 +89,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     async function register(data: { email: string; password: string }) {
         try {
-            const response = await api.post("/auth/register", data)
+            const response = await registerUser(data)
             if (response.status === 409) throw new Error("conflito de usuário")
             return {
                 status: response.status,
@@ -97,7 +104,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     }
 
     async function logout() {
-        await api.get("/auth/logout")
+        await logUserOut()
         api.interceptors.response.clear()
         setIsAuthenticated(false)
         setUser(null)

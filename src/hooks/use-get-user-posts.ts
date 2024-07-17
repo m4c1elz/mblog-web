@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { api } from "../lib/axios"
+import { getUserPosts } from "../services/get-user-posts"
 
 export interface PostType {
     id: number
@@ -16,7 +17,7 @@ export function useGetUserPosts({ userId }: { userId: number }) {
     const mutation = useQuery({
         queryKey: ["get-user-posts", userId],
         queryFn: async () => {
-            const response = await api.get(`/users/${userId}/posts`)
+            const response = await getUserPosts({ userId })
             return response.data as PostType[]
         },
     })

@@ -54,9 +54,11 @@ export function EditUser() {
                         />
                     </div>
                     <div className="space-y-2">
-                        <label htmlFor="name">
-                            Usuário (exemplo: @maciel06)
-                        </label>
+                        <label htmlFor="atsign">Usuário</label>
+                        <p className="text-sm text-black/40">
+                            (exemplo: "maciel06" aparecerá para os outros como
+                            "@maciel06")
+                        </p>
                         <Input
                             type="text"
                             placeholder="macielgames"
@@ -75,7 +77,7 @@ export function EditUser() {
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="descrição">Descrição</label>
+                        <label htmlFor="description">Descrição</label>
                         <Textarea
                             placeholder="Lorem ipsum dolor it sit amet..."
                             className="h-32"

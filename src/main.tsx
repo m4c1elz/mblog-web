@@ -49,6 +49,12 @@ const EditUser = lazy(() =>
     })),
 )
 
+const YourPosts = lazy(() =>
+    import("./pages/your-posts").then(module => ({
+        default: module.YourPosts,
+    })),
+)
+
 const router = createBrowserRouter([
     {
         path: "/login",
@@ -110,6 +116,16 @@ const router = createBrowserRouter([
             <ProtectedRoute>
                 <Suspense fallback={<Loading />}>
                     <EditUser />
+                </Suspense>
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/your-posts",
+        element: (
+            <ProtectedRoute>
+                <Suspense fallback={<Loading />}>
+                    <YourPosts />
                 </Suspense>
             </ProtectedRoute>
         ),

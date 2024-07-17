@@ -25,10 +25,13 @@ export function SidebarContent() {
                     <Milestone className="text-accent" />
                     Seguindo
                 </div>
-                <div className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10">
+                <Link
+                    to="/your-posts"
+                    className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10"
+                >
                     <Navigation className="text-accent" />
                     Suas Postagens
-                </div>
+                </Link>
                 <Dialog.Root>
                     <Dialog.Trigger>
                         <div className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10">

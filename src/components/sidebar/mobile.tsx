@@ -1,8 +1,8 @@
 import { List } from "lucide-react"
 import { useState } from "react"
-import { SidebarContent } from "./sidebar-content"
+import { Content } from "./content"
 
-export function MobileSidebar() {
+export function Mobile() {
     const [open, setOpen] = useState(false)
 
     return (
@@ -21,7 +21,7 @@ export function MobileSidebar() {
                     onClick={e => e.stopPropagation()}
                     className={`relative flex h-full transition-all duration-300 ${open ? "left-0" : "-left-full"} w-80 flex-col justify-between border-r border-black/20 bg-primary px-6 py-4 text-black`}
                 >
-                    <SidebarContent />
+                    <Content />
                 </aside>
             </div>
         </>

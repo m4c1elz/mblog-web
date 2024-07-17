@@ -31,10 +31,10 @@ export function LogoutDialog() {
             <Dialog.Footer>
                 <Button
                     onClick={handleLogout}
-                    disabled={loading ? true : false}
-                    className="bg-red-500 hover:bg-red-600"
+                    loading={loading}
+                    className="bg-red-500 hover:bg-red-600 disabled:bg-red-300"
                 >
-                    {loading ? "Saindo..." : "Sair"}
+                    Sair
                 </Button>
                 <Dialog.Close>
                     <Button className="bg-black hover:bg-black/80">

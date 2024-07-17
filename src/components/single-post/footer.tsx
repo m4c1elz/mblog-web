@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { SinglePostProps } from "."
 import { useCreateComment } from "../../hooks/use-create-comment"
 import { Textarea } from "../textarea"
+import { Button } from "../button"
 
 export function Footer({
     id,
@@ -15,8 +16,9 @@ export function Footer({
 
     const { handleSubmit, register } = useForm<SubmitCommentFormType>()
 
-    const { mutateAsync: addComment, isPending: isCreatingComment } =
-        useCreateComment({ postId: id })
+    const { mutateAsync: addComment, isPending } = useCreateComment({
+        postId: id,
+    })
 
     async function onSubmit(data: SubmitCommentFormType) {
         await addComment(data)
@@ -42,9 +44,9 @@ export function Footer({
                     className="h-32 w-full"
                     {...register("comment")}
                 ></Textarea>
-                <button className="w-full rounded bg-accent py-2 font-medium text-primary transition-colors hover:bg-accent/90">
-                    {isCreatingComment ? "Enviando..." : "Enviar"}
-                </button>
+                <Button loading={isPending} className="w-full">
+                    Enviar
+                </Button>
             </form>
         </>
     )

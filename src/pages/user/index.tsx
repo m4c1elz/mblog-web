@@ -55,7 +55,7 @@ export function User() {
         return (
             <UserLayout>
                 <main className="flex h-screen flex-1 flex-col items-center overflow-auto px-6 py-11 md:items-start xl:flex-row">
-                    <div className="m-auto space-y-4 xl:m-0">
+                    <div className="m-auto space-y-4 lg:max-w-[50%] xl:m-0">
                         <section className="min-w-96 space-y-6 border border-black/20 bg-primary px-6 py-4">
                             <h1 className="text-2xl font-bold">Usuário</h1>
                             <div className="flex w-full flex-col items-center gap-12 text-center sm:flex-row sm:text-start">

@@ -74,8 +74,12 @@ export function Login() {
                                 {...register("password")}
                             />
                         </section>
-                        <Button type="submit" className="w-full">
-                            {loading ? "Enviando..." : "Enviar"}
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            loading={loading}
+                        >
+                            Enviar
                         </Button>
                         {error && (
                             <h1 className="text-center font-medium text-red-400">

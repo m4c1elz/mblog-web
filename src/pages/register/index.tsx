@@ -72,8 +72,12 @@ export function Register() {
                                 {...register("password")}
                             />
                         </section>
-                        <Button type="submit" className="w-full">
-                            {loading ? "Enviando..." : "Cadastrar"}
+                        <Button
+                            loading={loading}
+                            type="submit"
+                            className="w-full"
+                        >
+                            Cadastrar
                         </Button>
                         {error && (
                             <h1 className="text-center font-medium text-red-400">

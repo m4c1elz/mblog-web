@@ -8,15 +8,15 @@ type PostData = { post: string }
 export function CreatePostDialog() {
     const { handleSubmit, register } = useForm<PostData>()
 
-    const { mutateAsync: createPost, isPending } = useCreatePost()
+    const {
+        mutateAsync: createPostFn,
+        isPending,
+        isError,
+        error,
+    } = useCreatePost()
 
-    async function onSubmit(data: PostData) {
-        try {
-            await createPost(data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const onSubmit = async (data: PostData) => await createPostFn(data)
+    isError && console.log(error)
 
     return (
         <form
@@ -39,8 +39,8 @@ export function CreatePostDialog() {
                 ></textarea>
             </div>
             <Dialog.Footer>
-                <Button type="submit" disabled={isPending ? true : false}>
-                    {isPending ? "Postando..." : "Postar"}
+                <Button type="submit" loading={isPending}>
+                    Postar
                 </Button>
 
                 <Dialog.Close>

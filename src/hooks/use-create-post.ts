@@ -18,9 +18,10 @@ export function useCreatePost() {
         mutationFn: async (data: PostData) => {
             await api.post("/posts", data)
         },
-        onSuccess: () => {
+        onSuccess: async () => {
             closeDialog()
             queryClient.invalidateQueries({ queryKey: ["get-posts"] })
+            await new Promise(resolve => setTimeout(resolve, 500))
             navigate("/")
         },
     })

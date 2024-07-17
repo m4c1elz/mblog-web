@@ -95,12 +95,12 @@ export function EditUser() {
                             Houve um erro ao editar o usuário.
                         </p>
                     )}
-                    <Button type="submit" className="w-full">
-                        {isPending ? (
-                            <LoaderCircle className="m-auto animate-spin" />
-                        ) : (
-                            "Enviar"
-                        )}
+                    <Button
+                        type="submit"
+                        loading={isPending && true}
+                        className="w-full"
+                    >
+                        Enviar
                     </Button>
                 </form>
             </div>

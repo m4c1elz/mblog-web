@@ -19,3 +19,7 @@
         "Helvetica Neue",
         sans-serif;
 }
+
+a.active {
+    color: #3e8ede;
+}

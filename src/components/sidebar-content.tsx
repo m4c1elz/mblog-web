@@ -1,5 +1,5 @@
 import { Quote, Milestone, Navigation, Upload } from "lucide-react"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { CreatePostDialog } from "./create-post-dialog"
 import { LogoutDialog } from "./logout-dialog"
 import { Dialog } from "./dialog"
@@ -14,24 +14,24 @@ export function SidebarContent() {
         <>
             <Logo />
             <section>
-                <Link
+                <NavLink
                     to="/"
                     className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10"
                 >
                     <Quote className="text-accent" />
                     Descubra
-                </Link>
+                </NavLink>
                 <div className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10">
                     <Milestone className="text-accent" />
                     Seguindo
                 </div>
-                <Link
+                <NavLink
                     to="/your-posts"
                     className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10"
                 >
                     <Navigation className="text-accent" />
                     Suas Postagens
-                </Link>
+                </NavLink>
                 <Dialog.Root>
                     <Dialog.Trigger>
                         <div className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10">
@@ -45,7 +45,7 @@ export function SidebarContent() {
                 </Dialog.Root>
             </section>
             <div>
-                <Link
+                <NavLink
                     to={`/users/${user.atsign}`}
                     className="mb-2 flex w-full cursor-pointer items-center gap-3 rounded-md px-1 py-4 transition-colors hover:bg-black/10"
                 >
@@ -54,7 +54,7 @@ export function SidebarContent() {
                         <h3 className="font-medium">{user.name}</h3>
                         <p className="text-black/30">@{user.atsign}</p>
                     </div>
-                </Link>
+                </NavLink>
                 <Dialog.Root>
                     <Dialog.Trigger>
                         <Button className="w-full bg-red-500 hover:bg-red-600">

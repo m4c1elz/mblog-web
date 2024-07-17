@@ -7,7 +7,7 @@ export function Content({ children }: DialogProps) {
     return (
         <div
             onClick={closeDialog}
-            className={`fixed inset-0 grid h-full w-full place-content-center transition-all duration-150 ${open ? "visible bg-black/70" : "invisible"}`}
+            className={`w-svh fixed inset-0 grid h-svh place-content-center transition-all duration-150 ${open ? "visible bg-black/70" : "invisible"}`}
         >
             <div
                 onClick={e => e.stopPropagation()}

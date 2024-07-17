@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form"
 import { EditUserLayout } from "./layout"
 import { useEditUser } from "../../hooks/use-edit-user"
 import { removeEmptyFields } from "../../helpers/remove-empty-fields"
+import { Dialog } from "../../components/dialog"
+import { DeleteUserDialog } from "../../components/delete-user-dialog"
 
 type UserEditFormType = {
     name: string
@@ -90,13 +92,28 @@ export function EditUser() {
                             Houve um erro ao editar o usuário.
                         </p>
                     )}
-                    <Button
-                        type="submit"
-                        loading={isPending && true}
-                        className="w-full"
-                    >
-                        Enviar
-                    </Button>
+                    <div>
+                        <Button
+                            type="submit"
+                            loading={isPending && true}
+                            className="mb-2 w-full"
+                        >
+                            Enviar
+                        </Button>
+                        <Dialog.Root>
+                            <Dialog.Trigger>
+                                <Button
+                                    type="button"
+                                    className="w-full bg-red-500 hover:bg-red-400 active:bg-red-600"
+                                >
+                                    Excluir usuário
+                                </Button>
+                            </Dialog.Trigger>
+                            <Dialog.Content>
+                                <DeleteUserDialog />
+                            </Dialog.Content>
+                        </Dialog.Root>
+                    </div>
                 </form>
             </div>
         </EditUserLayout>

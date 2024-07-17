@@ -1,9 +1,8 @@
-import { useQuery } from "@tanstack/react-query"
 import { useParams, Link } from "react-router-dom"
-import { api } from "../../lib/axios"
 import { Loading } from "../../components/loading"
-import { CheckCheck } from "lucide-react"
+import { CheckCheck, X } from "lucide-react"
 import { Logo } from "../../components/logo"
+import { useVerifyAccount } from "../../hooks/use-verify-account"
 
 export function VerifyAccount() {
     const { token } = useParams()
@@ -12,16 +11,25 @@ export function VerifyAccount() {
         data: successMessage,
         isPending,
         isSuccess,
-    } = useQuery({
-        queryKey: ["verify-email", token],
-        queryFn: async () => {
-            const response = await api.get(`/auth/confirm/${token}`)
-            if (response.status === 401) throw new Error("token expirado")
+        isError,
+    } = useVerifyAccount({ token: token! })
 
-            return "E-mail verificado com sucesso!"
-        },
-    })
-
+    if (isError)
+        return (
+            <div className="grid h-screen w-screen place-content-center space-y-6 p-2">
+                <Logo />
+                <section className="space-y-2 border border-black/20 bg-primary px-6 py-4 text-center">
+                    <X className="m-auto aspect-square rounded-full text-xl text-red-500" />
+                    <h1 className="text-xl font-bold">
+                        Houve um erro ao realizar o cadastro.
+                    </h1>
+                    <p>
+                        É possível que isso tenha ocorrido pois o link expirou.
+                        Tente novamente realizando outro cadastro.
+                    </p>
+                </section>
+            </div>
+        )
     if (isPending) return <Loading />
     if (isSuccess)
         return (

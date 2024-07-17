@@ -1,40 +1,14 @@
 import { Link, useParams } from "react-router-dom"
 import { PostPageLayout } from "./layout"
-import { useQuery } from "@tanstack/react-query"
-import { api } from "../../lib/axios"
 import { Loading } from "../../components/loading"
 import { dayjs } from "../../lib/dayjs"
 import { SinglePost } from "../../components/single-post"
-
-type SinglePostType = {
-    id: number
-    username: string
-    atsign: string
-    post: string
-    commentCount: number
-    likes: number
-    createdAt: string
-    updatedAt: any
-    comments: Comment[]
-}
-
-type Comment = {
-    user: string
-    comment: string
-    createdAt: string
-    updatedAt: any
-}
+import { useGetPost } from "../../hooks/use-get-post"
 
 export function PostPage() {
     const { id } = useParams()
 
-    const { data: post, isPending } = useQuery({
-        queryKey: ["get-post", id],
-        queryFn: async () => {
-            const response = await api.get(`/posts/${id}?comments=true`)
-            return response.data as SinglePostType
-        },
-    })
+    const { data: post, isPending } = useGetPost({ postId: id! })
 
     if (isPending)
         return (

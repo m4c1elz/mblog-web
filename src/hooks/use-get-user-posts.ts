@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query"
-import { api } from "../lib/axios"
 import { getUserPosts } from "../services/get-user-posts"
 
 export interface PostType {

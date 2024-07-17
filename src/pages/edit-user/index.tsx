@@ -3,9 +3,9 @@ import { Input } from "../../components/input"
 import { Textarea } from "../../components/textarea"
 import { ReturnedUserType, useAuth } from "../../providers/auth-provider"
 import { useForm } from "react-hook-form"
-import { LoaderCircle } from "lucide-react"
 import { EditUserLayout } from "./layout"
 import { useEditUser } from "../../hooks/use-edit-user"
+import { removeEmptyFields } from "../../helpers/remove-empty-fields"
 
 type UserEditFormType = {
     name: string
@@ -16,13 +16,7 @@ type UserEditFormType = {
 
 export function EditUser() {
     const { user } = useAuth() as { user: NonNullable<ReturnedUserType> }
-    const { register, handleSubmit } = useForm<UserEditFormType>({
-        defaultValues: {
-            name: user.name,
-            atsign: user.atsign,
-            description: user.description,
-        },
-    })
+    const { register, handleSubmit } = useForm<UserEditFormType>()
 
     const {
         mutateAsync: editUserFn,
@@ -32,7 +26,10 @@ export function EditUser() {
         error,
     } = useEditUser({ userId: user.id })
 
-    const onSubmit = async (data: UserEditFormType) => await editUserFn(data)
+    const onSubmit = async (data: UserEditFormType) => {
+        removeEmptyFields(data) // for removing fields that are set as "" or null
+        await editUserFn(data)
+    }
 
     isError && console.log(error)
 
@@ -71,9 +68,7 @@ export function EditUser() {
                         <Input
                             type="password"
                             placeholder="********"
-                            {...register("password", {
-                                setValueAs: pass => (pass === "" ? null : pass),
-                            })}
+                            {...register("password")}
                         />
                     </div>
                     <div className="flex flex-col gap-2">

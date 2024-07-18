@@ -4,6 +4,6 @@ export type User = {
     atsign: string
     description: string
     email: string
-    password: string
+    password?: string
     followers: number
 }

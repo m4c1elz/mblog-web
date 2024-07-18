@@ -1,14 +1,12 @@
 import { useParams } from "react-router-dom"
 import { UserLayout } from "./layout"
-import { useQuery } from "@tanstack/react-query"
-import { api } from "../../lib/axios"
 import { Loading } from "../../components/loading"
 import { ReturnedUserType, useAuth } from "../../providers/auth-provider"
-import { Button } from "../../components/button"
-import { CalendarPlus, ClipboardCopy, Contact } from "lucide-react"
-import { dayjs } from "../../lib/dayjs"
-import { Post } from "../../components/post"
-import { LinkButton } from "../../components/link-button"
+import { useGetUserPosts } from "../../hooks/use-get-user-posts"
+import { UserPostList } from "./post-list"
+import { MainUserSection } from "./main-user-section"
+import { UserDetailsSection } from "./user-details-section"
+import { useGetUser } from "../../hooks/use-get-user"
 
 export interface UserType {
     id: number
@@ -19,15 +17,7 @@ export interface UserType {
     description: any
     createdAt: string
     updatedAt: any
-    posts: Post[]
-}
-
-export interface Post {
-    id: number
-    post: string
-    likes: number
-    createdAt: string
-    updatedAt: any
+    postCount: number
 }
 
 export function User() {
@@ -36,12 +26,10 @@ export function User() {
         user: NonNullable<ReturnedUserType>
     }
 
-    const { data: user, isPending } = useQuery({
-        queryKey: ["get-user", atsign],
-        queryFn: async () => {
-            const response = await api.get(`/users/atsign/${atsign}?posts=true`)
-            return response.data as UserType
-        },
+    const { data: user, isPending } = useGetUser({ atsign: atsign! })
+
+    const { data: userPosts } = useGetUserPosts({
+        userId: user?.id ?? 0, // defining default value to 0, so it will skip the query if there's no user
     })
 
     if (isPending)
@@ -51,108 +39,27 @@ export function User() {
             </UserLayout>
         )
 
-    if (user)
+    if (user) {
         return (
             <UserLayout>
                 <main className="flex h-screen flex-1 flex-col items-center overflow-auto px-6 py-11 md:items-start xl:flex-row">
                     <div className="m-auto space-y-4 lg:max-w-[50%] xl:m-0">
-                        <section className="min-w-96 space-y-6 border border-black/20 bg-primary px-6 py-4">
-                            <h1 className="text-2xl font-bold">Usuário</h1>
-                            <div className="flex w-full flex-col items-center gap-12 text-center sm:flex-row sm:text-start">
-                                <div className="aspect-square w-32 rounded-full bg-slate-400 sm:h-32 sm:w-auto"></div>
-                                <div className="flex grow flex-col justify-between">
-                                    <div>
-                                        <h1 className="text-lg">{user.name}</h1>
-                                        <p className="text-black/40">
-                                            @{user.atsign}
-                                        </p>
-                                    </div>
-                                    {currentUser.atsign === user.atsign ? (
-                                        <LinkButton
-                                            to="/users/edit"
-                                            className="m-auto mt-2 w-20 sm:mx-0"
-                                        >
-                                            Editar
-                                        </LinkButton>
-                                    ) : (
-                                        <Button className="mx-auto mt-2 w-20 sm:mx-0">
-                                            Seguir
-                                        </Button>
-                                    )}
-                                </div>
-                            </div>
-                            {user.description && (
-                                <div>
-                                    <h1 className="text-xl font-bold">
-                                        Descrição do perfil
-                                    </h1>
-                                    <p>{user.description}</p>
-                                </div>
-                            )}
-                        </section>
-                        <div className="min-w-96 space-y-6 border border-black/20 bg-primary px-6 py-4">
-                            <div className="space-y-2">
-                                <h1 className="text-xl font-medium">
-                                    Total de seguidores
-                                </h1>
-                                <div className="flex items-center gap-1.5">
-                                    <Contact />
-                                    <p>{user.followers} seguidores </p>
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <h1 className="text-xl font-medium">
-                                    Conta criada em
-                                </h1>
-                                <div className="flex items-center gap-1.5">
-                                    <CalendarPlus />
-                                    <p>
-                                        {dayjs(
-                                            user.createdAt
-                                                .replace("T", " ")
-                                                .substring(0, 19),
-                                        ).format("DD/MM/YYYY")}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <h1 className="text-xl font-medium">
-                                    Total de postagens
-                                </h1>
-                                <div className="flex items-center gap-1.5">
-                                    <ClipboardCopy />
-                                    <p>{user.posts.length} postagens </p>
-                                </div>
-                            </div>
-                        </div>
+                        <MainUserSection
+                            user={user}
+                            currentUser={currentUser}
+                        />
+                        <UserDetailsSection user={user} />
                     </div>
                     <div className="w-screen space-y-4 pt-4 md:w-full md:flex-1 xl:pt-0">
                         <h1 className="text-medium text-center text-xl">
                             Postagens
                         </h1>
                         <div className="h-auto pb-16">
-                            {user.posts.length === 0 && (
-                                <h1 className="text-center font-medium">
-                                    Não há postagens para ver.
-                                </h1>
-                            )}
-                            {user.posts.map(post => (
-                                <Post.Root id={post.id} key={post.id}>
-                                    <Post.Header>
-                                        <Post.User atsign={user.atsign}>
-                                            {user.name}
-                                        </Post.User>
-                                        <Post.Date>{post.createdAt}</Post.Date>
-                                    </Post.Header>
-                                    <Post.Content>{post.post}</Post.Content>
-                                    <Post.Footer>
-                                        <Post.Likes>{post.likes}</Post.Likes>
-                                    </Post.Footer>
-                                </Post.Root>
-                            ))}
+                            <UserPostList userPosts={userPosts} />
                         </div>
                     </div>
                 </main>
             </UserLayout>
         )
+    }
 }

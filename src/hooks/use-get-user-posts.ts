@@ -19,6 +19,7 @@ export function useGetUserPosts({ userId }: { userId: number }) {
             const response = await getUserPosts({ userId })
             return response.data as PostType[]
         },
+        enabled: userId > 0, // if it's 0, the query will not run.
     })
 
     return mutation

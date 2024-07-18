@@ -1,10 +1,11 @@
-import { Button } from "../../components/button"
+import { FollowUserButton } from "../../components/follow-user-button"
 import { LinkButton } from "../../components/link-button"
 import { ReturnedUserType } from "../../providers/auth-provider"
 import { User } from "../../types/user"
 
 interface UserType extends User {
     postCount: number
+    isFollowing: boolean
 }
 
 interface MainUserSectionProps {
@@ -31,16 +32,18 @@ export function MainUserSection({ user, currentUser }: MainUserSectionProps) {
                             Editar
                         </LinkButton>
                     ) : (
-                        <Button className="mx-auto mt-2 w-20 sm:mx-0">
-                            Seguir
-                        </Button>
+                        <FollowUserButton
+                            isFollowing={user.isFollowing}
+                            userId={user.id}
+                            atsign={user.atsign}
+                        />
                     )}
                 </div>
             </div>
             {user.description && (
                 <div>
                     <h1 className="text-xl font-bold">Descrição do perfil</h1>
-                    <p>{user.description}</p>
+                    <pre className="font-inter">{user.description}</pre>
                 </div>
             )}
         </section>

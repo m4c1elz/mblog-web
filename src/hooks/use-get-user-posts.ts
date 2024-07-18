@@ -10,6 +10,7 @@ export interface PostType {
     comments: number
     createdAt: string
     updatedAt: string | null
+    isFollowing: boolean
 }
 
 export function useGetUserPosts({ userId }: { userId: number }) {

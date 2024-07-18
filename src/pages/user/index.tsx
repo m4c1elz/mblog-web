@@ -8,18 +8,6 @@ import { MainUserSection } from "./main-user-section"
 import { UserDetailsSection } from "./user-details-section"
 import { useGetUser } from "../../hooks/use-get-user"
 
-export interface UserType {
-    id: number
-    name: string
-    atsign: string
-    email: string
-    followers: number
-    description: any
-    createdAt: string
-    updatedAt: any
-    postCount: number
-}
-
 export function User() {
     const { atsign } = useParams()
     const { user: currentUser } = useAuth() as {

@@ -11,6 +11,7 @@ export interface UserType {
     createdAt: string
     updatedAt: any
     postCount: number
+    isFollowing: boolean
 }
 
 export function useGetUser({ atsign }: { atsign: string }) {

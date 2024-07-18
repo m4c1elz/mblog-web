@@ -55,6 +55,12 @@ const YourPosts = lazy(() =>
     })),
 )
 
+const Following = lazy(() =>
+    import("./pages/following").then(module => ({
+        default: module.Following,
+    })),
+)
+
 const router = createBrowserRouter([
     {
         path: "/login",
@@ -126,6 +132,16 @@ const router = createBrowserRouter([
             <ProtectedRoute>
                 <Suspense fallback={<Loading />}>
                     <YourPosts />
+                </Suspense>
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/following",
+        element: (
+            <ProtectedRoute>
+                <Suspense fallback={<Loading />}>
+                    <Following />
                 </Suspense>
             </ProtectedRoute>
         ),

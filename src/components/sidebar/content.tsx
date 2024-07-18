@@ -21,10 +21,13 @@ export function Content() {
                     <Quote className="text-accent" />
                     Descubra
                 </NavLink>
-                <div className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10">
+                <NavLink
+                    to="/following"
+                    className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10"
+                >
                     <Milestone className="text-accent" />
                     Seguindo
-                </div>
+                </NavLink>
                 <NavLink
                     to="/your-posts"
                     className="flex w-full cursor-pointer gap-3 rounded-md px-1 py-4 text-xl font-medium transition-colors hover:bg-black/10"

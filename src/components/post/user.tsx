@@ -13,8 +13,8 @@ export function User({ children, atsign }: UserProps) {
         >
             <div className="aspect-square w-8 rounded-full bg-slate-400"></div>
             <div>
-                <p className="text-md font-bold">{children}</p>
-                <p className="text-sm text-black/40">@{atsign}</p>
+                <p className="text-sm font-bold sm:text-base">{children}</p>
+                <p className="text-xs text-black/40 sm:text-sm">@{atsign}</p>
             </div>
         </Link>
     )

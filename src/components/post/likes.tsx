@@ -5,9 +5,9 @@ type LikesProps = PropsWithChildren
 
 export function Likes({ children }: LikesProps) {
     return (
-        <div className="flex gap-1">
+        <div className="flex items-center gap-1">
             <Heart />
-            <p>{children} Curtidas</p>
+            <p className="text-sm sm:text-base">{children} Curtidas</p>
         </div>
     )
 }

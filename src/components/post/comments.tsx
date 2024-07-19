@@ -5,9 +5,9 @@ type CommentsProps = PropsWithChildren
 
 export function Comments({ children }: CommentsProps) {
     return (
-        <div className="flex gap-1">
+        <div className="flex items-center gap-1">
             <Subtitles />
-            <p>
+            <p className="text-sm sm:text-base">
                 {children} {Number(children) > 1 ? "Comentários" : "Comentário"}
             </p>
         </div>

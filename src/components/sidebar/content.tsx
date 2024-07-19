@@ -1,11 +1,22 @@
 import { Quote, Milestone, Navigation, Upload } from "lucide-react"
 import { NavLink } from "react-router-dom"
-import { CreatePostDialog } from "../create-post-dialog"
-import { LogoutDialog } from "../logout-dialog"
 import { Dialog } from "../dialog"
 import { Logo } from "../logo"
 import { ReturnedUserType, useAuth } from "../../providers/auth-provider"
 import { Button } from "../button"
+import { lazy } from "react"
+
+const LogoutDialog = lazy(() =>
+    import("../logout-dialog").then(module => ({
+        default: module.LogoutDialog,
+    })),
+)
+
+const CreatePostDialog = lazy(() =>
+    import("../create-post-dialog").then(module => ({
+        default: module.CreatePostDialog,
+    })),
+)
 
 export function Content() {
     const { user } = useAuth() as { user: NonNullable<ReturnedUserType> }

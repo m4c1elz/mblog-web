@@ -43,7 +43,9 @@ export function MainUserSection({ user, currentUser }: MainUserSectionProps) {
             {user.description && (
                 <div>
                     <h1 className="text-xl font-bold">Descrição do perfil</h1>
-                    <pre className="font-inter">{user.description}</pre>
+                    <pre className="max-w-full whitespace-pre-wrap font-inter">
+                        {user.description}
+                    </pre>
                 </div>
             )}
         </section>

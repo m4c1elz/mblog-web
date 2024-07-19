@@ -40,11 +40,14 @@ export function UserPostList({ userPosts }: UserPostListProps) {
                             <Post.User atsign={post.atsign}>
                                 {post.name}
                             </Post.User>
-                            <Post.Date>{post.createdAt}</Post.Date>
+                            <Post.Date isEdited={post.updatedAt ? true : false}>
+                                {post.createdAt}
+                            </Post.Date>
                         </Post.Header>
                         <Post.Content>{post.post}</Post.Content>
                         <Post.Footer>
                             <Post.Likes>{post.likes}</Post.Likes>
+                            <Post.EditButton defaultValue={post.post} />
                         </Post.Footer>
                     </Post.Root>
                 ))}

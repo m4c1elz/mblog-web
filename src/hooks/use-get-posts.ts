@@ -4,7 +4,7 @@ import { getPosts } from "../services/get-posts"
 
 export function useGetPosts({ page }: { page: number }) {
     const query = useQuery({
-        queryKey: ["get-posts", page],
+        queryKey: ["get-posts"],
         queryFn: async () => {
             const response = await getPosts({ page })
             return response.data as PostType[]

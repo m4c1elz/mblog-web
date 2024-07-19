@@ -12,7 +12,9 @@ export function FollowingPostList({ postList }: FollowingPostListProps) {
                 <Post.Root id={post.id} key={post.id}>
                     <Post.Header>
                         <Post.User atsign={post.atsign}>{post.name}</Post.User>
-                        <Post.Date>{post.createdAt}</Post.Date>
+                        <Post.Date isEdited={post.updatedAt ? true : false}>
+                            {post.createdAt}
+                        </Post.Date>
                     </Post.Header>
                     <Post.Content>{post.post}</Post.Content>
                     <Post.Footer>

@@ -40,7 +40,11 @@ export function YourPosts() {
                                     <Post.User atsign={post.atsign}>
                                         {post.name}
                                     </Post.User>
-                                    <Post.Date>{post.createdAt}</Post.Date>
+                                    <Post.Date
+                                        isEdited={post.updatedAt ? true : false}
+                                    >
+                                        {post.createdAt}
+                                    </Post.Date>
                                 </Post.Header>
                                 <Post.Content>{post.post}</Post.Content>
                                 <Post.Footer>
@@ -48,6 +52,7 @@ export function YourPosts() {
                                     <Post.Comments>
                                         {post.comments}
                                     </Post.Comments>
+                                    <Post.EditButton defaultValue={post.post} />
                                 </Post.Footer>
                             </Post.Root>
                         ))}

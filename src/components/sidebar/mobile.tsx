@@ -15,7 +15,7 @@ export function Mobile() {
             </button>
             <div
                 onClick={() => setOpen(false)}
-                className={`${open ? "visible bg-black/50" : "invisible"} fixed h-screen w-screen transition-all`}
+                className={`${open ? "visible bg-black/50" : "invisible"} fixed z-10 h-screen w-screen transition-all`}
             >
                 <aside
                     onClick={e => e.stopPropagation()}

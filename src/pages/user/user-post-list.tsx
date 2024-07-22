@@ -1,5 +1,6 @@
 import { LoaderCircle } from "lucide-react"
 import { Post } from "../../components/post"
+import { useAuth } from "../../providers/auth-provider"
 
 export interface PostType {
     id: number
@@ -17,6 +18,8 @@ type UserPostListProps = {
 }
 
 export function UserPostList({ userPosts }: UserPostListProps) {
+    const { user } = useAuth()
+
     if (!userPosts)
         // then it's loading
         return (
@@ -47,7 +50,9 @@ export function UserPostList({ userPosts }: UserPostListProps) {
                         <Post.Content>{post.post}</Post.Content>
                         <Post.Footer>
                             <Post.Likes>{post.likes}</Post.Likes>
-                            <Post.EditButton defaultValue={post.post} />
+                            {user?.atsign === post.atsign && (
+                                <Post.EditButton defaultValue={post.post} />
+                            )}
                         </Post.Footer>
                     </Post.Root>
                 ))}

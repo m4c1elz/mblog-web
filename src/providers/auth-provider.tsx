@@ -96,6 +96,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
                 msg: `Um e-mail de verificação foi enviado para ${data.email}. Por favor, verifique seu e-mail.`,
             }
         } catch (error) {
+            console.log(error)
             return {
                 status: 409,
                 msg: "Este usuário já existe!",

@@ -8,10 +8,7 @@ interface EditButtonProps {
 
 export function EditButton({ defaultValue }: EditButtonProps) {
     return (
-        <div
-            className="flex flex-1 justify-end"
-            onClick={e => e.stopPropagation()}
-        >
+        <div onClick={e => e.stopPropagation()}>
             <Dialog.Root>
                 <Dialog.Trigger>
                     <Edit

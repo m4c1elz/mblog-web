@@ -52,7 +52,12 @@ export function YourPosts() {
                                     <Post.Comments>
                                         {post.comments}
                                     </Post.Comments>
-                                    <Post.EditButton defaultValue={post.post} />
+                                    <Post.Buttons>
+                                        <Post.EditButton
+                                            defaultValue={post.post}
+                                        />
+                                        <Post.DeleteButton />
+                                    </Post.Buttons>
                                 </Post.Footer>
                             </Post.Root>
                         ))}

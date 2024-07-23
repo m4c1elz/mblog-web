@@ -51,7 +51,10 @@ export function UserPostList({ userPosts }: UserPostListProps) {
                         <Post.Footer>
                             <Post.Likes>{post.likes}</Post.Likes>
                             {user?.atsign === post.atsign && (
-                                <Post.EditButton defaultValue={post.post} />
+                                <Post.Buttons>
+                                    <Post.EditButton defaultValue={post.post} />
+                                    <Post.DeleteButton />
+                                </Post.Buttons>
                             )}
                         </Post.Footer>
                     </Post.Root>

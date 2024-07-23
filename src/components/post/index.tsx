@@ -7,6 +7,8 @@ import { Likes } from "./likes"
 import { Comments } from "./comments"
 import { Date } from "./date"
 import { EditButton } from "./edit-button"
+import { Buttons } from "./buttons"
+import { DeleteButton } from "./delete-button"
 
 export const Post = {
     Root,
@@ -17,5 +19,7 @@ export const Post = {
     Footer,
     Likes,
     Comments,
+    Buttons,
     EditButton,
+    DeleteButton,
 }

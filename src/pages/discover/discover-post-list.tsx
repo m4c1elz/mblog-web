@@ -24,7 +24,10 @@ export function DiscoverPostList({ postList }: DiscoverPostListProps) {
                         <Post.Likes>{post.likes}</Post.Likes>
                         <Post.Comments>{post.comments}</Post.Comments>
                         {user?.atsign === post.atsign && (
-                            <Post.EditButton defaultValue={post.post} />
+                            <Post.Buttons>
+                                <Post.EditButton defaultValue={post.post} />
+                                <Post.DeleteButton />
+                            </Post.Buttons>
                         )}
                     </Post.Footer>
                 </Post.Root>

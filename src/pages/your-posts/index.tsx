@@ -48,10 +48,12 @@ export function YourPosts() {
                                 </Post.Header>
                                 <Post.Content>{post.post}</Post.Content>
                                 <Post.Footer>
-                                    <Post.Likes>{post.likes}</Post.Likes>
-                                    <Post.Comments>
-                                        {post.comments}
-                                    </Post.Comments>
+                                    <Post.Stats>
+                                        <Post.Likes>{post.likes}</Post.Likes>
+                                        <Post.Comments>
+                                            {post.comments}
+                                        </Post.Comments>
+                                    </Post.Stats>
                                     <Post.Buttons>
                                         <Post.EditButton
                                             defaultValue={post.post}

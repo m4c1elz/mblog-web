@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { useQueryClient } from "@tanstack/react-query"
 import { editUser } from "../services/edit-user"
+import { useAuth } from "../providers/auth-provider"
 
 type UserEditFormType = {
     name: string
@@ -12,15 +13,22 @@ type UserEditFormType = {
 export function useEditUser({ userId }: { userId: number }) {
     const queryClient = useQueryClient()
 
+    const { user } = useAuth()
+
     const mutation = useMutation({
         mutationKey: ["edit-user", userId],
         mutationFn: async (data: UserEditFormType) => {
             await editUser({ userId, data })
         },
-        onSuccess: () => {
+        onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
                 queryKey: ["get-user", userId],
             })
+            if (!user) {
+                return
+            }
+
+            user.atsign = variables.atsign
         },
     })
 

@@ -43,7 +43,7 @@ export function UserPostList({ userPosts }: UserPostListProps) {
                             <Post.User atsign={post.atsign}>
                                 {post.name}
                             </Post.User>
-                            <Post.Date isEdited={post.updatedAt ? true : false}>
+                            <Post.Date isEdited={post.updatedAt !== undefined}>
                                 {post.createdAt}
                             </Post.Date>
                         </Post.Header>

@@ -2,11 +2,15 @@ import { DiscoverLayout } from "./layout"
 import { Loading } from "../../components/loading"
 import { useGetPosts } from "../../hooks/use-get-posts"
 import { DiscoverPostList } from "./discover-post-list"
+import { useSearchParams } from "react-router-dom"
+import { Pagination } from "../../components/pagination"
 
 export function Discover() {
-    let page = 1
+    const [searchParams] = useSearchParams()
 
-    const { data: posts, isPending, isError, error } = useGetPosts({ page })
+    const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1
+
+    const { data, isPending, isError, error } = useGetPosts({ page })
 
     if (isError) {
         console.log(error)
@@ -28,12 +32,13 @@ export function Discover() {
             </DiscoverLayout>
         )
 
-    if (posts)
+    if (data)
         return (
             <DiscoverLayout>
                 <div className="flex-1">
                     <div className="mt-6 h-screen overflow-auto md:mt-0">
-                        <DiscoverPostList postList={posts} />
+                        <DiscoverPostList postList={data.posts} />
+                        <Pagination page={page} maxPages={data.pages} />
                     </div>
                 </div>
             </DiscoverLayout>

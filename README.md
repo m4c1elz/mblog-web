@@ -1,7 +1,9 @@
 # MBlog
 
 A twitter-like social media web app, made entirely in Typescript.\
-![screenshot](./image.png)\
+\
+![screenshot](./image.png)
+\
 
 This repo contains the front-end for the project, made with React and TailwindCSS.
 

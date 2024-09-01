@@ -3,9 +3,5 @@ import { PropsWithChildren } from "react"
 type ButtonsProps = PropsWithChildren
 
 export function Buttons({ children }: ButtonsProps) {
-    return (
-        <div className="flex flex-1 justify-around sm:justify-normal">
-            {children}
-        </div>
-    )
+    return <div className="flex items-center gap-2">{children}</div>
 }

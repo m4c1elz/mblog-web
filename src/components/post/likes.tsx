@@ -7,7 +7,7 @@ export function Likes({ children }: LikesProps) {
     return (
         <div className="flex items-center gap-1">
             <Heart />
-            <p className="text-sm sm:text-base">{children} Curtidas</p>
+            <p className="text-sm sm:text-base">{children}</p>
         </div>
     )
 }

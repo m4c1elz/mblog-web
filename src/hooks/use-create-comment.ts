@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createComment } from "../services/create-comment"
 
-type SubmitCommentFormType = {
+type SubmitCommentFormProps = {
     comment: string
 }
 
@@ -10,14 +10,14 @@ export function useCreateComment({ postId }: { postId: number | string }) {
 
     const mutation = useMutation({
         mutationKey: ["add-comment"],
-        mutationFn: async (data: SubmitCommentFormType) =>
-            await createComment({
+        mutationFn: (data: SubmitCommentFormProps) =>
+            createComment({
                 postId,
                 data,
             }),
         onSuccess: async () => {
             queryClient.invalidateQueries({
-                queryKey: ["get-post", postId],
+                queryKey: ["get-post", { postId }],
             })
         },
     })

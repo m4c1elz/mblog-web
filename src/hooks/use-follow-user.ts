@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { followUser } from "../services/follow-user"
-import { UserType } from "./use-get-user"
 import { useAuth } from "../providers/auth-provider"
+import { UserType } from "../types/user"
 
 export function useFollowUser({
     userId,
@@ -14,26 +14,27 @@ export function useFollowUser({
     const { user } = useAuth()
 
     const mutation = useMutation({
-        mutationKey: ["follow-user", userId],
-        mutationFn: async () => await followUser({ userId }),
+        mutationKey: ["follow-user", { userId }],
+        mutationFn: () => followUser({ userId }),
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ["get-following-posts", user?.id],
             })
-            const cached = queryClient.getQueryData(["get-user", atsign])
 
-            if (cached) {
-                queryClient.setQueryData(
-                    ["get-user", atsign],
-                    (data: UserType) => {
-                        return {
-                            ...data,
-                            followers: data.followers + 1,
-                            isFollowing: true,
-                        }
-                    },
-                )
-            }
+            queryClient.setQueryData<Required<UserType>>(
+                ["get-user", { atsign }],
+                data => {
+                    if (!data) {
+                        return
+                    }
+
+                    return {
+                        ...data,
+                        followers: data.followers + 1,
+                        isFollowing: true,
+                    }
+                },
+            )
         },
     })
 

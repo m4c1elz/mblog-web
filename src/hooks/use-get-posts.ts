@@ -5,10 +5,7 @@ import { PostResponse } from "../types/post-response"
 export function useGetPosts({ page }: { page: number }) {
     const query = useQuery<PostResponse>({
         queryKey: ["get-posts", { page }],
-        queryFn: async () => {
-            const response = await getPosts({ page })
-            return response.data
-        },
+        queryFn: () => getPosts({ page }),
     })
 
     return query

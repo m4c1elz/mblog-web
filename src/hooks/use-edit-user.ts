@@ -17,18 +17,18 @@ export function useEditUser({ userId }: { userId: number }) {
 
     const mutation = useMutation({
         mutationKey: ["edit-user", userId],
-        mutationFn: async (data: UserEditFormType) => {
-            await editUser({ userId, data })
-        },
+        mutationFn: (data: UserEditFormType) => editUser({ userId, data }),
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
-                queryKey: ["get-user", userId],
+                queryKey: ["get-user", { userId }],
             })
+
             if (!user) {
                 return
             }
 
             user.atsign = variables.atsign
+            user.name = variables.name
         },
     })
 

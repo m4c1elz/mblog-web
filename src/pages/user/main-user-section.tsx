@@ -3,13 +3,13 @@ import { LinkButton } from "../../components/link-button"
 import { ReturnedUserType } from "../../providers/auth-provider"
 import { UserType } from "../../types/user"
 
-interface UserType extends User {
+interface User extends UserType {
     postCount: number
     isFollowing: boolean
 }
 
 interface MainUserSectionProps {
-    user: UserType
+    user: User
     currentUser: NonNullable<ReturnedUserType>
 }
 

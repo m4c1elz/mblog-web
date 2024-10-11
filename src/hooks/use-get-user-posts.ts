@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import { getUserPosts } from "../services/get-user-posts"
 
-export function useGetUserPosts({ userId }: { userId: number }) {
+interface GetUserProps {
+    userId: number
+}
+
+export function useGetUserPosts({ userId }: GetUserProps) {
     const mutation = useQuery({
         queryKey: ["get-user-posts", { userId }],
-        queryFn: async () => {
-            const posts = await getUserPosts({ userId })
-            return posts
-        },
+        queryFn: () => getUserPosts({ userId }),
         enabled: userId > 0, // if it's 0, the query will not run.
     })
 

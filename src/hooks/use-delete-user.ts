@@ -4,7 +4,7 @@ import { deleteUser } from "../services/delete-user"
 export function useDeleteUser({ userId }: { userId: number }) {
     const mutation = useMutation({
         mutationKey: ["delete-user", userId],
-        mutationFn: async () => await deleteUser({ userId }),
+        mutationFn: () => deleteUser({ userId }),
         onSuccess: () => window.location.reload(),
     })
 

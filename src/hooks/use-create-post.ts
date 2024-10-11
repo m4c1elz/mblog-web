@@ -3,7 +3,7 @@ import { useDialog } from "../providers/dialog-provider"
 import { useNavigate } from "react-router-dom"
 import { createPost } from "../services/create-post"
 
-type PostData = {
+type CreatePostProps = {
     post: string
 }
 
@@ -15,10 +15,13 @@ export function useCreatePost() {
 
     const mutation = useMutation({
         mutationKey: ["create-post"],
-        mutationFn: async (data: PostData) => await createPost(data),
+        mutationFn: (data: CreatePostProps) => createPost(data),
         onSuccess: async () => {
             closeDialog()
-            queryClient.invalidateQueries({ queryKey: ["get-posts"] })
+            queryClient.invalidateQueries({
+                queryKey: ["get-posts", { page: 1 }],
+            })
+            // delay a little bit before going to the  page
             await new Promise(resolve => setTimeout(resolve, 500))
             navigate("/")
         },

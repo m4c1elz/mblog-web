@@ -1,9 +1,13 @@
-export type User = {
+export interface UserType {
     id: number
     name: string
     atsign: string
-    description: string
     email: string
     password?: string
-    followers: number
+    followers?: number
+    description: any
+    createdAt: string
+    updatedAt: any
+    postCount?: number
+    isFollowing?: boolean
 }

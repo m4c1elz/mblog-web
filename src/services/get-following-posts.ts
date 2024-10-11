@@ -1,4 +1,5 @@
 import { api } from "../lib/axios"
+import { Post } from "../types/post"
 
 export interface PostType {
     id: number
@@ -14,5 +15,5 @@ export interface PostType {
 
 export async function getFollowingPosts() {
     const response = await api.get("/posts/following")
-    return response.data as PostType[]
+    return response.data as Post[]
 }

@@ -1,6 +1,6 @@
 import { api } from "../lib/axios"
 
-export interface PostResponse {
+export interface PostType {
     id: number
     name: string
     atsign: string
@@ -14,5 +14,5 @@ export interface PostResponse {
 
 export async function getUserPosts({ userId }: { userId: number }) {
     const response = await api.get(`/users/${userId}/posts`)
-    return response.data as PostResponse[]
+    return response.data as PostType[]
 }

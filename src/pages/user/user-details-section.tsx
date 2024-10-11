@@ -1,11 +1,6 @@
 import { dayjs } from "../../lib/dayjs"
 import { Contact, CalendarPlus, ClipboardCopy } from "lucide-react"
-import { User } from "../../types/user"
-
-interface UserType extends User {
-    postCount: number
-    createdAt: string
-}
+import { UserType } from "../../types/user"
 
 interface UserDetailsSectionProps {
     user: UserType

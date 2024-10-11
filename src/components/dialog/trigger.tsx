@@ -5,7 +5,7 @@ export function Trigger({ children }: DialogProps) {
     const { openDialog } = useDialog()
     return (
         <div
-            onClick={e => {
+            onClick={() => {
                 openDialog()
             }}
         >

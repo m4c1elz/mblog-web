@@ -35,7 +35,7 @@ export function useEditPost({ postId }: { postId: number }) {
             }
 
             queryClient.invalidateQueries({
-                queryKey: ["get-user-posts", user?.id],
+                queryKey: ["get-user-posts", { userId: user?.id }],
             })
         },
     })

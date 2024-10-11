@@ -13,6 +13,8 @@ import { refreshResponseInterceptor } from "../lib/axios"
 import { logUserIn } from "../services/log-user-in"
 import { registerUser } from "../services/register-user"
 import { logUserOut } from "../services/log-user-out"
+import { getUserById } from "../services/get-user-by-id"
+import { refreshToken } from "../services/refresh-token"
 
 const AuthContext = createContext<AuthProviderValueType | null>(null)
 
@@ -22,11 +24,6 @@ export type ReturnedUserType = {
     atsign: string
     email: string
     description: string
-}
-
-export type LoginResponse = {
-    token: string
-    user: ReturnedUserType
 }
 
 export type AuthProviderValueType = {
@@ -48,14 +45,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
     useEffect(() => {
         ;(async () => {
             try {
-                const response = await api.get("/auth/refresh")
-                const { token } = response.data as { token: string }
+                const { token } = await refreshToken()
                 api.defaults.headers["Authorization"] = `Bearer ${token}`
 
                 const { userId } = jwtDecode(token) as UserPayload
-                const {
-                    data: { id, name, atsign, email, description },
-                } = await api.get(`/users/${userId}`)
+                const { id, name, email, atsign, description } =
+                    await getUserById({ userId })
                 setUser({ id, name, atsign, email, description })
 
                 setIsAuthenticated(true)
@@ -76,8 +71,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     }, [])
 
     async function login(data: { email: string; password: string }) {
-        const response = await logUserIn(data)
-        const { token, user } = response.data as LoginResponse
+        const { token, user } = await logUserIn(data)
         api.defaults.headers["Authorization"] = `Bearer ${token}`
         api.interceptors.response.use(
             response => response,

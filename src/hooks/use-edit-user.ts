@@ -16,13 +16,13 @@ export function useEditUser({ userId }: { userId: number }) {
     const { user } = useAuth()
 
     const mutation = useMutation({
-        mutationKey: ["edit-user", userId],
+        mutationKey: ["edit-user", { userId }],
         mutationFn: async (data: UserEditFormType) => {
             await editUser({ userId, data })
         },
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
-                queryKey: ["get-user", userId],
+                queryKey: ["get-user", { userId }],
             })
             if (!user) {
                 return

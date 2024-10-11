@@ -17,7 +17,7 @@ export function useCreateComment({ postId }: { postId: number | string }) {
             }),
         onSuccess: async () => {
             queryClient.invalidateQueries({
-                queryKey: ["get-post", postId],
+                queryKey: ["get-post", { postId }],
             })
         },
     })

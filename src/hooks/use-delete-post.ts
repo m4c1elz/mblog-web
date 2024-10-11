@@ -8,7 +8,7 @@ export function useDeletePost({ postId }: { postId: number }) {
     const { user } = useAuth()
 
     const mutation = useMutation({
-        mutationKey: ["delete-post", postId],
+        mutationKey: ["delete-post", { postId }],
         mutationFn: async () => {
             await api.delete(`/posts/${postId}`)
         },
@@ -19,7 +19,7 @@ export function useDeletePost({ postId }: { postId: number }) {
             })
 
             queryClient.setQueryData(
-                ["get-user-posts", user?.id],
+                ["get-user-posts", { userId: user?.id }],
                 (data: Post[]) => {
                     if (!data) return
                     return data.filter(post => post.id !== postId)
